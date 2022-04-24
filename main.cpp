@@ -5,13 +5,16 @@
 #define SDL_MAIN_HANDLED
 #include <SDL2/SDL.h>
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
 #include "renderEngine/DisplayManager.h"
 #include "renderEngine/Loader.h"
 #include "renderEngine/Renderer.h"
 #include "shaders/StaticShader.h"
 #include "textures/ModelTexture.h"
 #include "models/TexturedModel.h"
-
+#include "toolbox/Maths.h"
 
 int main(int argc, char* argv[]) {
     SDL_Init(SDL_INIT_EVERYTHING);
@@ -26,6 +29,7 @@ int main(int argc, char* argv[]) {
     Renderer renderer;
 
     StaticShader shader;
+
 
     std::vector<float> vertices = {
         -.5f,  .5f, 0.f,
@@ -50,6 +54,8 @@ int main(int argc, char* argv[]) {
 
     TexturedModel texturedModel(model, texture);
 
+    Entity entity(texturedModel, glm::vec3(-1, 0, 0), 0, 0, 0, 1);
+
     SDL_Event e;
     while(true) {
         while(SDL_PollEvent(&e)) {
@@ -59,7 +65,7 @@ int main(int argc, char* argv[]) {
         renderer.prepare();
         shader.start();
 
-        renderer.render(texturedModel);
+        renderer.render(entity, shader);
 
         shader.stop();
         dm.updateDisplay();

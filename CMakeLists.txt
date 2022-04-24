@@ -20,7 +20,7 @@ add_executable(game3d
          src/renderEngine/Loader.cpp  src/renderEngine/Renderer.cpp
          src/shaders/ShaderProgram.cpp 
         src/shaders/StaticShader.cpp  src/textures/ModelTexture.cpp
-         src/models/TexturedModel.cpp )
+         src/models/TexturedModel.cpp src/toolbox/Maths.cpp src/toolbox/Maths.h src/entities/Entity.cpp src/entities/Entity.h)
 
 target_include_directories(game3d PRIVATE vendor/glad/include)
 target_include_directories(game3d PRIVATE vendor)

@@ -11,6 +11,7 @@
 #include<string>
 
 #include <glad/glad.h>
+#include <glm/glm.hpp>
 
 class ShaderProgram {
 protected:
@@ -24,6 +25,27 @@ protected:
 
     void bindAttribute(int attribute, const std::string& variableName);
 
+    int getUniformLocation(const std::string& uniformName);
+    virtual void getAllUniformLocations() {};
+
+
+
+    void loadFloat(int location, float value) {
+        glUniform1f(location, value);
+    }
+
+    void loadVector(int location, const glm::vec3& vec) {
+        glUniform3f(location, vec.x, vec.y, vec.z);
+    }
+
+    void loadBoolean(int location, bool value) {
+        glUniform1i(location, (int) value);
+    }
+
+    void loadMatrix(int location, const glm::mat4& mat) {
+        glUniformMatrix4fv(location, 1, GL_FALSE, &mat[0][0]);
+    }
+
 public:
     ShaderProgram(const std::string& vertexFile, const std::string& fragmentFile);
 
@@ -36,11 +58,6 @@ public:
     }
 
     void cleanUp();
-
-
-    void uniform1v(const std::string& name, int value) {
-        glUniform1i( glGetUniformLocation(programID, name.c_str()), value );
-    }
 };
 
 

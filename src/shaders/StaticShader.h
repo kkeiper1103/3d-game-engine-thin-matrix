@@ -13,10 +13,15 @@ protected:
     static std::string vertexFile;
     static std::string fragmentFile;
 
+    int location_transformationMatrix;
+
     void bindAttributes() override;
+    void getAllUniformLocations() override;
 
 public:
     StaticShader();
+
+    void loadTransformationMatrix(const glm::mat4& matrix);
 };
 
 

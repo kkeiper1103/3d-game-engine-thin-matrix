@@ -50,6 +50,17 @@ ShaderProgram::ShaderProgram(const std::string &vertexFile, const std::string &f
     glLinkProgram(programID);
 
     glValidateProgram(programID);
+
+    // this calls the ShaderProgram::getAllUniformLocations() method,
+    // not the derived method. This is a difference from Java vs C++ itself
+    // the "best" way to do this would be to put
+    //
+    //  bindAttributes();
+    //  getAllUniformLocations();
+    //  glLinkProgram(programID);
+    //
+    // in the derived classes' constructors
+    getAllUniformLocations();
 }
 
 void ShaderProgram::cleanUp() {
@@ -64,4 +75,8 @@ void ShaderProgram::cleanUp() {
 
 void ShaderProgram::bindAttribute(int attribute, const std::string &variableName) {
     glBindAttribLocation(programID, attribute, variableName.c_str());
+}
+
+int ShaderProgram::getUniformLocation(const std::string &uniformName) {
+    return glGetUniformLocation(programID, uniformName.c_str());
 }
