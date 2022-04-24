@@ -78,6 +78,11 @@ unsigned int Loader::loadTexture(const std::string &fileName) {
 
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
 
+    // not generating mipmaps makes a black screen? what?
+    // possibly because the GL_TEXTURE_MIN_FILTER parameter? maybe it sees that I'm specifying a minification filter, so it's waiting for
+    // the mipmap to be generated?
+    glGenerateMipmap(GL_TEXTURE_2D);
+
     stbi_image_free(pixels);
 
     glBindTexture(GL_TEXTURE_2D, 0);

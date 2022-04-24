@@ -62,7 +62,7 @@ int main(int argc, char* argv[]) {
 
 
     RawModel model = loader.loadToVAO(vertices, textures, indices);
-    ModelTexture texture( loader.loadTexture("assets/images/test-tile.png") );
+    ModelTexture texture( loader.loadTexture("assets/images/image.png") );
 
     TexturedModel texturedModel(model, texture);
 
