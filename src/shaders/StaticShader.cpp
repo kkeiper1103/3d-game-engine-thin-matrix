@@ -12,18 +12,6 @@ void StaticShader::bindAttributes() {
     bindAttribute(1, "textureCoords");
 }
 
-StaticShader::StaticShader() : ShaderProgram(vertexFile, fragmentFile) {/*
-    cleanUp();
+StaticShader::StaticShader() : ShaderProgram(vertexFile, fragmentFile) {
 
-    vertexShaderID = loadShader(vertexFile, GL_VERTEX_SHADER);
-    fragmentShaderID = loadShader(fragmentFile, GL_FRAGMENT_SHADER);
-
-    programID = glCreateProgram();
-    glAttachShader(programID, vertexShaderID);
-    glAttachShader(programID, fragmentShaderID);
-
-    StaticShader::bindAttributes();
-    glLinkProgram(programID);
-
-    glValidateProgram(programID);*/
 }
