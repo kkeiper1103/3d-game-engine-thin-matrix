@@ -11,7 +11,6 @@
 #include "shaders/StaticShader.h"
 #include "textures/ModelTexture.h"
 #include "models/TexturedModel.h"
-#include "shaders/Shader.h"
 
 
 int main(int argc, char* argv[]) {
@@ -26,22 +25,7 @@ int main(int argc, char* argv[]) {
     Loader loader;
     Renderer renderer;
 
-    /**
-     * None of these want to render the texture. I just get a black rectangle
-     * I know the shader is working because I can change `FragColor = vec4(1, 1, 1, 1);` and the rect shows up white
-     *
-     * It just doesn't seem to know where to get the image and I can't figure out what I forgot
-     */
-
-    // on stack
-    // StaticShader shader;
-
-    // on heap
-    std::unique_ptr<ShaderProgram> shader = std::make_unique<StaticShader>();
-
-    // slightly different calling conventions, but also does not work
-    // from learnopengl.com
-    // Shader shader2("assets/shaders/vertex.glsl", "assets/shaders/fragment.glsl");
+    StaticShader shader;
 
     std::vector<float> vertices = {
         -.5f,  .5f, 0.f,
@@ -73,17 +57,17 @@ int main(int argc, char* argv[]) {
         }
 
         renderer.prepare();
-        shader->start();
+        shader.start();
 
         renderer.render(texturedModel);
 
-        shader->stop();
+        shader.stop();
         dm.updateDisplay();
     }
     terminate:
 
 
-    shader->cleanUp();
+    shader.cleanUp();
     loader.cleanUp();
     dm.closeDisplay();
 
