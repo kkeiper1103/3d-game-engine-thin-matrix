@@ -3,6 +3,7 @@
 //
 
 #include "StaticShader.h"
+#include "toolbox/Maths.h"
 
 std::string StaticShader::vertexFile = "assets/shaders/vertex.glsl";
 std::string StaticShader::fragmentFile = "assets/shaders/fragment.glsl";
@@ -25,8 +26,20 @@ StaticShader::StaticShader() : ShaderProgram(vertexFile, fragmentFile) {
 
 void StaticShader::getAllUniformLocations() {
     location_transformationMatrix = getUniformLocation("transformationMatrix");
+    location_projectionMatrix = getUniformLocation("projectionMatrix");
+    location_viewMatrix = getUniformLocation("viewMatrix");
 }
 
 void StaticShader::loadTransformationMatrix(const glm::mat4 &matrix) {
     loadMatrix(location_transformationMatrix, matrix);
+}
+
+void StaticShader::loadProjectionMatrix(const glm::mat4 &matrix) {
+    loadMatrix(location_projectionMatrix, matrix);
+}
+
+void StaticShader::loadViewMatrix(const Camera &camera) {
+    glm::mat4 viewMatrix = Maths::createViewMatrix(camera);
+
+    loadMatrix(location_viewMatrix, viewMatrix);
 }

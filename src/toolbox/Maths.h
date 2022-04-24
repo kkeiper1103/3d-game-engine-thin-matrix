@@ -7,11 +7,14 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include "entities/Camera.h"
 
 
 class Maths {
 public:
     static glm::mat4 createTransformationMatrix(const glm::vec3& translation, float rx, float ry, float rz, float scale);
+
+    static glm::mat4 createViewMatrix(const Camera& camera);
 };
 
 

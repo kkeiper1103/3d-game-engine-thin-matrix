@@ -13,7 +13,18 @@
 #include "shaders/StaticShader.h"
 
 class Renderer {
+protected:
+    float FOV = 70;
+    float NEAR_PLANE = 0.1f;
+    float FAR_PLANE = 1000.f;
+
+    glm::mat4 projectionMatrix;
+
+    void createProjectionMatrix();
+
 public:
+    Renderer(StaticShader& shader);
+
     void prepare();
     void render(const Entity& entity, StaticShader& shader);
 };

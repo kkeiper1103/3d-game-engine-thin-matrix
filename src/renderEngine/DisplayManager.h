@@ -12,7 +12,9 @@
 
 class DisplayManager {
 public:
-    const int width = 1280, height = 720;
+    static int width;
+    static int height;
+
     bool fullscreen;
 
     SDL_Window* window = nullptr;

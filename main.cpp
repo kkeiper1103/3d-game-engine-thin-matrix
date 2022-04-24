@@ -26,26 +26,81 @@ int main(int argc, char* argv[]) {
 
 
     Loader loader;
-    Renderer renderer;
 
     StaticShader shader;
+    Renderer renderer(shader);
 
 
     std::vector<float> vertices = {
-        -.5f,  .5f, 0.f,
-        -.5f, -.5f, 0.f,
-         .5f, -.5f, 0.f,
-         .5f,  .5f, 0.f,
+            -0.5f,0.5f,-0.5f,
+            -0.5f,-0.5f,-0.5f,
+            0.5f,-0.5f,-0.5f,
+            0.5f,0.5f,-0.5f,
+
+            -0.5f,0.5f,0.5f,
+            -0.5f,-0.5f,0.5f,
+            0.5f,-0.5f,0.5f,
+            0.5f,0.5f,0.5f,
+
+            0.5f,0.5f,-0.5f,
+            0.5f,-0.5f,-0.5f,
+            0.5f,-0.5f,0.5f,
+            0.5f,0.5f,0.5f,
+
+            -0.5f,0.5f,-0.5f,
+            -0.5f,-0.5f,-0.5f,
+            -0.5f,-0.5f,0.5f,
+            -0.5f,0.5f,0.5f,
+
+            -0.5f,0.5f,0.5f,
+            -0.5f,0.5f,-0.5f,
+            0.5f,0.5f,-0.5f,
+            0.5f,0.5f,0.5f,
+
+            -0.5f,-0.5f,0.5f,
+            -0.5f,-0.5f,-0.5f,
+            0.5f,-0.5f,-0.5f,
+            0.5f,-0.5f,0.5f
     };
     std::vector<unsigned int> indices = {
-        0, 1, 2,
-        2, 0, 3
+            0,1,3,
+            3,1,2,
+            4,5,7,
+            7,5,6,
+            8,9,11,
+            11,9,10,
+            12,13,15,
+            15,13,14,
+            16,17,19,
+            19,17,18,
+            20,21,23,
+            23,21,22
     };
     std::vector<float> textures = {
-        0.f, 0.f,
-        0.f, 1.f,
-        1.f, 1.f,
-        1.f, 0.f,
+            0,0,
+            0,1,
+            1,1,
+            1,0,
+            0,0,
+            0,1,
+            1,1,
+            1,0,
+            0,0,
+            0,1,
+            1,1,
+            1,0,
+            0,0,
+            0,1,
+            1,1,
+            1,0,
+            0,0,
+            0,1,
+            1,1,
+            1,0,
+            0,0,
+            0,1,
+            1,1,
+            1,0
     };
 
 
@@ -54,7 +109,9 @@ int main(int argc, char* argv[]) {
 
     TexturedModel texturedModel(model, texture);
 
-    Entity entity(texturedModel, glm::vec3(-1, 0, 0), 0, 0, 0, 1);
+    Entity entity(texturedModel, glm::vec3(0, 0, -5), 0, 0, 0, 1);
+
+    Camera camera;
 
     SDL_Event e;
     while(true) {
@@ -62,9 +119,14 @@ int main(int argc, char* argv[]) {
             if(e.type == SDL_QUIT) goto terminate;
         }
 
+        camera.move();
+
         renderer.prepare();
         shader.start();
 
+        shader.loadViewMatrix(camera);
+
+        entity.increaseRotation(1, 1, 0);
         renderer.render(entity, shader);
 
         shader.stop();

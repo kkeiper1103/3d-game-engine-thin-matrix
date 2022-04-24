@@ -17,3 +17,15 @@ glm::mat4 Maths::createTransformationMatrix(const glm::vec3 &translation, float 
 
     return model;
 }
+
+glm::mat4 Maths::createViewMatrix(const Camera &camera) {
+    glm::mat4 view(1.0);
+
+    view = glm::rotate(view, glm::radians(camera.getPitch()), glm::vec3(1, 0, 0));
+    view = glm::rotate(view, glm::radians(camera.getYaw()), glm::vec3(0, 1, 0));
+    view = glm::rotate(view, glm::radians(camera.getRoll()), glm::vec3(0, 0, 1));
+
+    view = glm::translate(view, (camera.getPosition() * -1.f));
+
+    return view;
+}

@@ -4,6 +4,9 @@
 
 #include "DisplayManager.h"
 
+int DisplayManager::width = 1280;
+int DisplayManager::height = 700;
+
 void DisplayManager::createDisplay() {
     window = SDL_CreateWindow("GameEngine3d", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL);
 
