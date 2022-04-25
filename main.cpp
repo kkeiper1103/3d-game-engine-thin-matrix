@@ -24,26 +24,18 @@ int main(int argc, char* argv[]) {
 
     DisplayManager dm;
     dm.createDisplay();
-
-
     Loader loader;
-
     StaticShader shader;
     Renderer renderer(shader);
 
 
 
-    RawModel model = OBJLoader::loadObjModel("assets/stall/stall.obj", loader);
-
-    ModelTexture texture( loader.loadTexture("assets/stall/stallTexture.png") );
-
+    RawModel model = OBJLoader::loadObjModel("assets/models/dragon.obj", loader);
+    ModelTexture texture( loader.loadTexture("assets/images/test-tile.png") );
     TexturedModel texturedModel(model, texture);
-
     Entity entity(texturedModel, glm::vec3(0, 0, -50), 0, 0, 0, 1);
 
     Camera camera;
-
-
 
     SDL_Event e;
     while(true) {
