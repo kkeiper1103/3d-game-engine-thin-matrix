@@ -20,6 +20,8 @@ protected:
     int location_viewMatrix;
     int location_lightPosition;
     int location_lightColor;
+    int location_shineDamper;
+    int location_reflectivity;
 
     void bindAttributes() override;
     void getAllUniformLocations() override;
@@ -32,6 +34,8 @@ public:
     void loadViewMatrix(const Camera& camera);
 
     void loadLight(const Light& light);
+
+    void loadShineVariables(float damper, float reflectivity);
 };
 
 

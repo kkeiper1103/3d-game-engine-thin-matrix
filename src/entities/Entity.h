@@ -5,6 +5,8 @@
 #ifndef INC_3D_GAME_ENGINE_THIN_MATRIX_ENTITY_H
 #define INC_3D_GAME_ENGINE_THIN_MATRIX_ENTITY_H
 
+#include <memory>
+
 #include <glm/glm.hpp>
 
 #include "models/TexturedModel.h"
@@ -72,6 +74,8 @@ public:
         Entity::scale = scale;
     }
 };
+
+typedef std::shared_ptr<Entity> EntityPtr;
 
 
 #endif //INC_3D_GAME_ENGINE_THIN_MATRIX_ENTITY_H

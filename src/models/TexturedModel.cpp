@@ -6,6 +6,8 @@
 
 TexturedModel::TexturedModel(const RawModel &model, const ModelTexture &texture) : rawModel(model), texture(texture) {
 
+    // this is for comparing the texturedmodel in a map in MasterRenderer
+    id = (model.getVao() << 4) + (texture.getID());
 }
 
 const RawModel &TexturedModel::getRawModel() const {

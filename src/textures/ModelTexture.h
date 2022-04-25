@@ -10,6 +10,9 @@ class ModelTexture {
 protected:
     unsigned int textureID;
 
+    float shineDamper = 1.f;
+    float reflectivity = 0.f;
+
 public:
     explicit ModelTexture(unsigned int id);
 
@@ -17,6 +20,14 @@ public:
     inline unsigned int getID() const {
         return textureID;
     }
+
+    float getShineDamper() const;
+
+    void setShineDamper(float shineDamper);
+
+    float getReflectivity() const;
+
+    void setReflectivity(float reflectivity);
 };
 
 
