@@ -68,6 +68,8 @@ unsigned int Loader::loadTexture(const std::string &fileName) {
     glGenTextures(1, &textureId);
     glBindTexture(GL_TEXTURE_2D, textureId);
 
+    stbi_set_flip_vertically_on_load(true);
+
     int w, h, channels;
     unsigned char* pixels = stbi_load(fileName.c_str(), &w, &h, &channels, STBI_rgb_alpha);
 
