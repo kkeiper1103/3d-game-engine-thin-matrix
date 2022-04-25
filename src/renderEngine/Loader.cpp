@@ -34,13 +34,15 @@ void Loader::unbindVAO() {
     glBindVertexArray(0);
 }
 
-RawModel Loader::loadToVAO(const std::vector<float> &positions, const std::vector<float>& texCoords, const std::vector<unsigned int>& indices) {
+RawModel Loader::loadToVAO(const std::vector<float> &positions, const std::vector<float>& texCoords,
+                           const std::vector<float>& normals, const std::vector<unsigned int>& indices) {
     unsigned int vaoID = createVAO();
 
     bindIndicesBuffer(indices);
 
     storeDataInAttributeList(0, 3, positions);
     storeDataInAttributeList(1, 2, texCoords);
+    storeDataInAttributeList(2, 3, normals);
 
     unbindVAO();
 

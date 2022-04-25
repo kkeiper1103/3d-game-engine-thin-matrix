@@ -20,6 +20,7 @@ void Renderer::render(const Entity& entity, StaticShader& shader) {
     glBindVertexArray(model.getVao());
     glEnableVertexAttribArray(0); // position attribute
     glEnableVertexAttribArray(1); // textures uv
+    glEnableVertexAttribArray(2); // normal
 
     glm::mat4 transformationMatrix = Maths::createTransformationMatrix(
         entity.getPosition(),
@@ -36,6 +37,7 @@ void Renderer::render(const Entity& entity, StaticShader& shader) {
 
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
+    glDisableVertexAttribArray(2);
     glBindVertexArray(0);
 }
 

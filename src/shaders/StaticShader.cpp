@@ -15,6 +15,7 @@ void StaticShader::bindAttributes() {
 
     bindAttribute(0, "position");
     bindAttribute(1, "textureCoords");
+    bindAttribute(2, "normal");
 }
 
 StaticShader::StaticShader() : ShaderProgram(vertexFile, fragmentFile) {
@@ -28,6 +29,8 @@ void StaticShader::getAllUniformLocations() {
     location_transformationMatrix = getUniformLocation("transformationMatrix");
     location_projectionMatrix = getUniformLocation("projectionMatrix");
     location_viewMatrix = getUniformLocation("viewMatrix");
+    location_lightColor = getUniformLocation("lightColor");
+    location_lightPosition = getUniformLocation("lightPosition");
 }
 
 void StaticShader::loadTransformationMatrix(const glm::mat4 &matrix) {
@@ -42,4 +45,9 @@ void StaticShader::loadViewMatrix(const Camera &camera) {
     glm::mat4 viewMatrix = Maths::createViewMatrix(camera);
 
     loadMatrix(location_viewMatrix, viewMatrix);
+}
+
+void StaticShader::loadLight(const Light &light) {
+    loadVector(location_lightPosition, light.getPosition());
+    loadVector(location_lightColor, light.getColor());
 }

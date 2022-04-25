@@ -82,7 +82,7 @@ RawModel OBJLoader::loadObjModel(const std::string &fileName, Loader &loader) {
         verticesData[currentVertex++] = v.z;
     }
 
-    return loader.loadToVAO(verticesData, textureData, indices);
+    return loader.loadToVAO(verticesData, textureData, normalData, indices);
 }
 
 std::vector<std::string> OBJLoader::split(const std::string &line, const char delimiter) {

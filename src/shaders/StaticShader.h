@@ -8,6 +8,7 @@
 
 #include "ShaderProgram.h"
 #include "entities/Camera.h"
+#include "entities/Light.h"
 
 class StaticShader : public ShaderProgram {
 protected:
@@ -17,6 +18,8 @@ protected:
     int location_transformationMatrix;
     int location_projectionMatrix;
     int location_viewMatrix;
+    int location_lightPosition;
+    int location_lightColor;
 
     void bindAttributes() override;
     void getAllUniformLocations() override;
@@ -27,6 +30,8 @@ public:
     void loadTransformationMatrix(const glm::mat4& matrix);
     void loadProjectionMatrix(const glm::mat4& matrix);
     void loadViewMatrix(const Camera& camera);
+
+    void loadLight(const Light& light);
 };
 
 
