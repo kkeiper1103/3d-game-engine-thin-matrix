@@ -2,8 +2,8 @@
 // Created by kkeiper on 4/23/2022.
 //
 
-#ifndef INC_3D_GAME_ENGINE_THIN_MATRIX_RENDERER_H
-#define INC_3D_GAME_ENGINE_THIN_MATRIX_RENDERER_H
+#ifndef INC_3D_GAME_ENGINE_THIN_MATRIX_ENTITYRENDERER_H
+#define INC_3D_GAME_ENGINE_THIN_MATRIX_ENTITYRENDERER_H
 
 #include <map>
 #include <vector>
@@ -16,22 +16,12 @@
 #include "entities/Entity.h"
 #include "shaders/StaticShader.h"
 
-class Renderer {
+class EntityRenderer {
 protected:
     StaticShader shader;
 
-    float FOV = 70;
-    float NEAR_PLANE = 0.1f;
-    float FAR_PLANE = 1000.f;
-
-    glm::mat4 projectionMatrix;
-
-    void createProjectionMatrix();
-
 public:
-    Renderer(StaticShader& shader);
-
-    void prepare();
+    EntityRenderer(StaticShader& shader, const glm::mat4& projectionMatrix);
 
     void render( const std::map<TexturedModel, std::vector< EntityPtr >>& entities );
     void prepareTexturedModel(const TexturedModel& model);
@@ -40,4 +30,4 @@ public:
 };
 
 
-#endif //INC_3D_GAME_ENGINE_THIN_MATRIX_RENDERER_H
+#endif //INC_3D_GAME_ENGINE_THIN_MATRIX_ENTITYRENDERER_H

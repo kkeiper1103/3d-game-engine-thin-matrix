@@ -40,4 +40,14 @@ void Camera::move() {
     if(keys[SDL_SCANCODE_S]) {
         position.z += 0.5f;
     }
+
+    if(keys[SDL_SCANCODE_SPACE])
+        position.y += 0.5f;
+
+    if(keys[SDL_SCANCODE_C])
+        position.y -= 0.5f;
+}
+
+Camera::Camera(const glm::vec3 &position) : position(position) {
+
 }

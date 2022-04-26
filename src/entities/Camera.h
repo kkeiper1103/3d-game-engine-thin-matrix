@@ -18,6 +18,7 @@ protected:
 
 public:
     Camera();
+    explicit Camera(const glm::vec3& position);
 
     const glm::vec3 &getPosition() const;
 

@@ -3,29 +3,13 @@
 //
 
 #include <cstdio>
-#include "Renderer.h"
+#include "EntityRenderer.h"
 #include "toolbox/Maths.h"
 #include "DisplayManager.h"
 
-void Renderer::prepare() {
-    glEnable(GL_DEPTH_TEST);
-    glClearColor(0, 0, 0, 1);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-}
 
-void Renderer::createProjectionMatrix() {
-    float aspectRatio = (float) DisplayManager::width / (float) DisplayManager::height;
 
-    projectionMatrix = glm::perspective(glm::radians(FOV), aspectRatio, NEAR_PLANE, FAR_PLANE);
-}
-
-Renderer::Renderer(StaticShader& shader) : shader(shader) {
-
-    glEnable(GL_CULL_FACE);
-    glCullFace(GL_BACK);
-
-    createProjectionMatrix();
-
+EntityRenderer::EntityRenderer(StaticShader& shader, const glm::mat4& projectionMatrix) : shader(shader) {
     shader.start();
     shader.loadProjectionMatrix(projectionMatrix);
     shader.stop();
@@ -33,7 +17,7 @@ Renderer::Renderer(StaticShader& shader) : shader(shader) {
     printf("done starting shader with projection matrix");
 }
 
-void Renderer::render(const std::map<TexturedModel, std::vector< EntityPtr >> &entities) {
+void EntityRenderer::render(const std::map<TexturedModel, std::vector< EntityPtr >> &entities) {
     for(auto& kv: entities) {
         auto model = kv.first;
 
@@ -50,7 +34,7 @@ void Renderer::render(const std::map<TexturedModel, std::vector< EntityPtr >> &e
     }
 }
 
-void Renderer::prepareTexturedModel(const TexturedModel& model) {
+void EntityRenderer::prepareTexturedModel(const TexturedModel& model) {
     auto rawModel = model.getRawModel();
 
     glBindVertexArray(rawModel.getVao());
@@ -64,14 +48,14 @@ void Renderer::prepareTexturedModel(const TexturedModel& model) {
     glBindTexture(GL_TEXTURE_2D, model.getTexture().getID());
 }
 
-void Renderer::unbindTexturedModel() {
+void EntityRenderer::unbindTexturedModel() {
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
     glDisableVertexAttribArray(2);
     glBindVertexArray(0);
 }
 
-void Renderer::prepareInstance(const EntityPtr &entity) {
+void EntityRenderer::prepareInstance(const EntityPtr &entity) {
     glm::mat4 transformationMatrix = Maths::createTransformationMatrix(
             entity->getPosition(),
             entity->getRotX(), entity->getRotY(), entity->getRotZ(),

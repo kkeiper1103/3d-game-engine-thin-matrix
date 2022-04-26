@@ -10,23 +10,41 @@
 #include <map>
 
 #include "shaders/StaticShader.h"
-#include "Renderer.h"
+#include "EntityRenderer.h"
+#include "TerrainRenderer.h"
 
 class MasterRenderer {
 protected:
     StaticShader shader;
-    Renderer renderer;
+    EntityRenderer renderer;
+
+    TerrainRenderer terrainRenderer;
+    TerrainShader terrainShader;
 
     std::map<TexturedModel, std::vector< EntityPtr >> entities;
+    std::vector< TerrainPtr > terrains;
+
+    float FOV = 70;
+    float NEAR_PLANE = 0.1f;
+    float FAR_PLANE = 1000.f;
+
+    glm::mat4 projectionMatrix;
 
 public:
     MasterRenderer();
 
+
+    void prepare();
+
     void render(const Light& sun, const Camera& camera);
 
     void processEntity(EntityPtr& entity);
+    void processTerrain(TerrainPtr& terrain);
 
     void cleanUp();
+
+
+    void createProjectionMatrix();
 };
 
 

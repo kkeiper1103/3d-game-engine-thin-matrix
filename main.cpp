@@ -10,7 +10,7 @@
 
 #include "renderEngine/DisplayManager.h"
 #include "renderEngine/Loader.h"
-#include "renderEngine/Renderer.h"
+#include "renderEngine/EntityRenderer.h"
 #include "shaders/StaticShader.h"
 #include "textures/ModelTexture.h"
 #include "models/TexturedModel.h"
@@ -39,7 +39,12 @@ int main(int argc, char* argv[]) {
 
     Light light(glm::vec3( 3000, 2000, 3000 ), glm::vec3( 1, 1, 1 ));
 
-    Camera camera;
+
+    auto terrain = std::make_shared<Terrain>(0, 0, loader, ModelTexture(loader.loadTexture("assets/images/grass.png")));
+    auto terrain2 = std::make_shared<Terrain>(1, 0, loader, ModelTexture(loader.loadTexture("assets/images/grass.png")));
+
+
+    Camera camera(glm::vec3(0, 10, 0));
 
 
     std::vector<EntityPtr> allCubes;
@@ -61,7 +66,10 @@ int main(int argc, char* argv[]) {
     }
 
 
+
+
     MasterRenderer renderer;
+    renderer.createProjectionMatrix();
 
     SDL_Event e;
     while(true) {
@@ -71,6 +79,8 @@ int main(int argc, char* argv[]) {
 
         camera.move();
 
+        renderer.processTerrain(terrain);
+        renderer.processTerrain(terrain2);
 
         for(auto& cube: allCubes)
             renderer.processEntity(cube);
@@ -81,6 +91,7 @@ int main(int argc, char* argv[]) {
         dm.updateDisplay();
     }
     terminate:
+
 
     renderer.cleanUp();
     loader.cleanUp();
