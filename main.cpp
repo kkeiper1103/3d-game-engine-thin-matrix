@@ -18,6 +18,16 @@
 #include "renderEngine/OBJLoader.h"
 #include "renderEngine/MasterRenderer.h"
 
+
+std::vector<EntityPtr> entities;
+
+
+/**
+ *
+ * @param argc
+ * @param argv
+ * @return
+ */
 int main(int argc, char* argv[]) {
     SDL_Init(SDL_INIT_EVERYTHING);
     atexit(SDL_Quit);
@@ -27,9 +37,6 @@ int main(int argc, char* argv[]) {
     dm.createDisplay();
     Loader loader;
 
-    std::vector<EntityPtr> entities;
-
-
 
     TexturedModel fernModel(
         OBJLoader::loadObjModel("assets/res/fern.obj", loader),
@@ -37,13 +44,13 @@ int main(int argc, char* argv[]) {
     );
 
     TexturedModel treeModel(
-            OBJLoader::loadObjModel("assets/res/tree.obj", loader),
-            ModelTexture( loader.loadTexture("assets/res/tree.png") )
+        OBJLoader::loadObjModel("assets/res/tree.obj", loader),
+        ModelTexture( loader.loadTexture("assets/res/tree.png") )
     );
 
     TexturedModel grassModel(
-            OBJLoader::loadObjModel("assets/res/grassModel.obj", loader),
-            ModelTexture( loader.loadTexture("assets/res/grassTexture.png") )
+        OBJLoader::loadObjModel("assets/res/grassModel.obj", loader),
+        ModelTexture( loader.loadTexture("assets/res/grassTexture.png") )
     );
 
 
@@ -92,7 +99,6 @@ int main(int argc, char* argv[]) {
     Camera camera(glm::vec3(0, 10, 0));
 
 
-
     MasterRenderer renderer;
     renderer.createProjectionMatrix();
 
@@ -108,8 +114,8 @@ int main(int argc, char* argv[]) {
         renderer.processTerrain(terrain2);
 
         // do ferns and trees
-        for(auto& e: entities) {
-            renderer.processEntity(e);
+        for(auto& entity: entities) {
+            renderer.processEntity(entity);
         }
 
         renderer.render(light, camera);

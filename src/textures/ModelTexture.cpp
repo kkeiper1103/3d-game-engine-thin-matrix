@@ -13,7 +13,7 @@ float ModelTexture::getShineDamper() const {
 }
 
 void ModelTexture::setShineDamper(float shineDamper) {
-    ModelTexture::shineDamper = shineDamper;
+    this->shineDamper = shineDamper;
 }
 
 float ModelTexture::getReflectivity() const {
@@ -21,5 +21,5 @@ float ModelTexture::getReflectivity() const {
 }
 
 void ModelTexture::setReflectivity(float reflectivity) {
-    ModelTexture::reflectivity = reflectivity;
+    this->reflectivity = reflectivity;
 }

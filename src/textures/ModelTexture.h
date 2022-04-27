@@ -16,17 +16,14 @@ protected:
 public:
     explicit ModelTexture(unsigned int id);
 
-
     inline unsigned int getID() const {
         return textureID;
     }
 
     float getShineDamper() const;
-
     void setShineDamper(float shineDamper);
 
     float getReflectivity() const;
-
     void setReflectivity(float reflectivity);
 };
 
