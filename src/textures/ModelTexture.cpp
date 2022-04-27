@@ -23,3 +23,19 @@ float ModelTexture::getReflectivity() const {
 void ModelTexture::setReflectivity(float reflectivity) {
     this->reflectivity = reflectivity;
 }
+
+bool ModelTexture::isFakeLighting() const {
+    return fakeLighting;
+}
+
+void ModelTexture::setFakeLighting(bool fakeLighting) {
+    ModelTexture::fakeLighting = fakeLighting;
+}
+
+bool ModelTexture::isTransparent() const {
+    return transparent;
+}
+
+void ModelTexture::setTransparent(bool transparent) {
+    ModelTexture::transparent = transparent;
+}

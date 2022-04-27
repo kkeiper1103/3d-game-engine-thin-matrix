@@ -12,9 +12,9 @@ class Camera {
 protected:
     glm::vec3 position = glm::vec3(0, 0, 0);
 
-    float pitch;
-    float yaw;
-    float roll;
+    float pitch = 0.f;
+    float yaw = 0.f;
+    float roll = 0.f;
 
 public:
     Camera();

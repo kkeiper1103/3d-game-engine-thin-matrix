@@ -37,10 +37,11 @@ int main(int argc, char* argv[]) {
     dm.createDisplay();
     Loader loader;
 
-
+    ModelTexture fernTexture( loader.loadTexture("assets/res/fern.png") );
+    fernTexture.setTransparent(true);
     TexturedModel fernModel(
         OBJLoader::loadObjModel("assets/res/fern.obj", loader),
-        ModelTexture( loader.loadTexture("assets/res/fern.png") )
+        fernTexture
     );
 
     TexturedModel treeModel(
@@ -48,9 +49,11 @@ int main(int argc, char* argv[]) {
         ModelTexture( loader.loadTexture("assets/res/tree.png") )
     );
 
+    ModelTexture grassTexture( loader.loadTexture("assets/res/grassTexture.png") );
+    grassTexture.setTransparent(true);
     TexturedModel grassModel(
         OBJLoader::loadObjModel("assets/res/grassModel.obj", loader),
-        ModelTexture( loader.loadTexture("assets/res/grassTexture.png") )
+        grassTexture
     );
 
 

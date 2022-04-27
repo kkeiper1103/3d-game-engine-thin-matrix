@@ -13,6 +13,9 @@ protected:
     float shineDamper = 1.f;
     float reflectivity = 0.f;
 
+    bool fakeLighting = false;
+    bool transparent = false;
+
 public:
     explicit ModelTexture(unsigned int id);
 
@@ -25,6 +28,12 @@ public:
 
     float getReflectivity() const;
     void setReflectivity(float reflectivity);
+
+    bool isFakeLighting() const;
+    void setFakeLighting(bool fakeLighting);
+
+    bool isTransparent() const;
+    void setTransparent(bool transparent);
 };
 
 
