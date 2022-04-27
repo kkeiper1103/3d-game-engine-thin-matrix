@@ -22,6 +22,7 @@ protected:
     int location_lightColor;
     int location_shineDamper;
     int location_reflectivity;
+    int location_skyColor;
 
     void bindAttributes() override;
     void getAllUniformLocations() override;
@@ -36,6 +37,8 @@ public:
     void loadLight(const Light& light);
 
     void loadShineVariables(float damper, float reflectivity);
+
+    void loadSkyColor(float r, float g, float b);
 };
 
 

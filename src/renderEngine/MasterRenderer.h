@@ -28,6 +28,10 @@ protected:
     float NEAR_PLANE = 0.1f;
     float FAR_PLANE = 1000.f;
 
+    glm::vec4 skyColor = glm::vec4(
+        .33, .50, .67, 1
+    );
+
     glm::mat4 projectionMatrix;
 
 public:

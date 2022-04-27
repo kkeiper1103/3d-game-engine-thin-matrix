@@ -25,6 +25,7 @@ void MasterRenderer::render(const Light &sun, const Camera &camera) {
     prepare();
 
     shader.start();
+    shader.loadSkyColor(skyColor.r, skyColor.g, skyColor.b);
 
     shader.loadLight(sun);
     shader.loadViewMatrix(camera);
@@ -34,6 +35,8 @@ void MasterRenderer::render(const Light &sun, const Camera &camera) {
     shader.stop();
 
     terrainShader.start();
+    terrainShader.loadSkyColor(skyColor.r, skyColor.g, skyColor.b);
+
     terrainShader.loadLight(sun);
     terrainShader.loadViewMatrix(camera);
     terrainRenderer.render(terrains);
@@ -67,7 +70,7 @@ void MasterRenderer::prepare() {
     glEnable(GL_DEPTH_TEST);
 
     // give the render background a blueish hue to mimic the sky
-    glClearColor(.33, .50, .67, 1);
+    glClearColor(skyColor.r, skyColor.g, skyColor.b, skyColor.a);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 

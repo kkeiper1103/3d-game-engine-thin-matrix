@@ -4,6 +4,7 @@ in vec2 pass_textureCoords;
 in vec3 surfaceNormal;
 in vec3 toLightVector;
 in vec3 toCameraVector;
+in float visibility;
 
 out vec4 FragColor;
 
@@ -13,6 +14,8 @@ uniform float shineDamper;
 uniform float reflectivity;
 
 uniform float fakeLighting;
+
+uniform vec3 skyColor;
 
 void main() {
     // calculate the texel at given coordinate
@@ -57,4 +60,7 @@ void main() {
     // final output
     // diffuse * texture + specular highlights
     FragColor = vec4(diffuse, 1.0) * texel + vec4(finalSpecular, 1.0);
+
+    //
+    FragColor = mix( vec4(skyColor, 1), FragColor, visibility );
 }
