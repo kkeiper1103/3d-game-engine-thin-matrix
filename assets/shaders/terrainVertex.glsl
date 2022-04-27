@@ -20,7 +20,7 @@ void main() {
 
     gl_Position = projectionMatrix * viewMatrix * worldPosition;
 
-    pass_textureCoords = textureCoords;
+    pass_textureCoords = textureCoords * 40.0;
 
     surfaceNormal = (transformationMatrix * vec4(normal, 0)).xyz;
     toLightVector = lightPosition - worldPosition.xyz;
