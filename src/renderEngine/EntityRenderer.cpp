@@ -6,7 +6,7 @@
 #include "EntityRenderer.h"
 #include "toolbox/Maths.h"
 #include "DisplayManager.h"
-
+#include "MasterRenderer.h"
 
 
 EntityRenderer::EntityRenderer(StaticShader& shader, const glm::mat4& projectionMatrix) : shader(shader) {
@@ -42,6 +42,10 @@ void EntityRenderer::prepareTexturedModel(const TexturedModel& model) {
     glEnableVertexAttribArray(1); // textures uv
     glEnableVertexAttribArray(2); // normal
 
+    if(model.getTexture().isTransparent()) {
+        MasterRenderer::disableCulling();
+    }
+
     shader.loadShineVariables(model.getTexture().getShineDamper(), model.getTexture().getReflectivity());
 
     glActiveTexture(GL_TEXTURE0);
@@ -49,6 +53,8 @@ void EntityRenderer::prepareTexturedModel(const TexturedModel& model) {
 }
 
 void EntityRenderer::unbindTexturedModel() {
+    MasterRenderer::enableCulling();
+
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
     glDisableVertexAttribArray(2);

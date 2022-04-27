@@ -8,8 +8,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 MasterRenderer::MasterRenderer() : renderer(EntityRenderer(shader, glm::mat4(1.0)) ), terrainRenderer(terrainShader, glm::mat4(1.0)) {
-    glEnable(GL_CULL_FACE);
-    glCullFace(GL_BACK);
+    enableCulling();
 
     createProjectionMatrix();
 
