@@ -13,6 +13,13 @@ uniform float shineDamper;
 uniform float reflectivity;
 
 void main() {
+    // calculate the texel at given coordinate
+    vec4 texel = texture(textureSampler, pass_textureCoords);
+
+    // if the alpha is less than 50%, just discard the pass and move on
+    if(texel.a < 0.5) {
+        discard;
+    }
 
     // get diffuse lighting
     vec3 unitNormal = normalize(surfaceNormal);
@@ -38,5 +45,5 @@ void main() {
 
     // final output
     // diffuse * texture + specular highlights
-    FragColor = vec4(diffuse, 1.0) * texture(textureSampler, pass_textureCoords) + vec4(finalSpecular, 1.0);
+    FragColor = vec4(diffuse, 1.0) * texel + vec4(finalSpecular, 1.0);
 }

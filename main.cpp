@@ -27,17 +27,62 @@ int main(int argc, char* argv[]) {
     dm.createDisplay();
     Loader loader;
 
+    std::vector<EntityPtr> entities;
 
 
 
+    TexturedModel fernModel(
+        OBJLoader::loadObjModel("assets/res/fern.obj", loader),
+        ModelTexture( loader.loadTexture("assets/res/fern.png") )
+    );
+
+    TexturedModel treeModel(
+            OBJLoader::loadObjModel("assets/res/tree.obj", loader),
+            ModelTexture( loader.loadTexture("assets/res/tree.png") )
+    );
+
+    TexturedModel grassModel(
+            OBJLoader::loadObjModel("assets/res/grassModel.obj", loader),
+            ModelTexture( loader.loadTexture("assets/res/grassTexture.png") )
+    );
 
 
-    RawModel model = OBJLoader::loadObjModel("assets/models/dragon.obj", loader);
-    ModelTexture texture( loader.loadTexture("assets/images/test-tile.png") );
+    // generate random amount of trees between 30 and 80
+    for(auto i=0; i < (rand() % 50) + 30; i++) {
+        float x = 20, y = 0, z = -50, rx = 0, ry = 0, rz = 0, scale = 5.8;
 
-    TexturedModel cubeModel(model, texture);
+        x = (rand() % 200) - 100;
+        z = (rand() % 200) - 230;
 
-    Light light(glm::vec3( 3000, 2000, 3000 ), glm::vec3( 1, 1, 1 ));
+        scale = ((rand() / double(RAND_MAX)) + 1) * 5;
+
+        entities.emplace_back( std::make_shared<Entity>(treeModel, glm::vec3(x, y, z), rx, ry, rz, scale) );
+    }
+
+    // generate random amount of ferns between 100 and 200
+    for(auto i=0; i < (rand() % 100) + 100; i++) {
+        float x = 10, y = 0, z = -50, rx = 0, ry = 0, rz = 0, scale = 1;
+
+        x = (rand() % 200) - 100;
+        z = (rand() % 200) - 230;
+
+        entities.emplace_back( std::make_shared<Entity>(fernModel, glm::vec3(x, y, z), rx, ry, rz, scale) );
+    }
+
+    // generate random amount of grass between 20 and 30
+    for(auto i=0; i < (rand() % 10) + 20; i++) {
+        float x = 50, y = 0, z = -50, rx = 0, ry = 0, rz = 0, scale = 2;
+
+        x = (rand() % 200) - 100;
+        z = (rand() % 200) - 230;
+
+        scale = ((rand() / double(RAND_MAX)) + .5) * 2;
+
+        entities.emplace_back( std::make_shared<Entity>(grassModel, glm::vec3(x, y, z), rx, ry, rz, scale) );
+    }
+
+
+    Light light(glm::vec3( 50, 200, -50 ), glm::vec3( 1, 1, 1 ));
 
 
     auto terrain = std::make_shared<Terrain>(0, 0, loader, ModelTexture(loader.loadTexture("assets/images/grass.png")));
@@ -45,26 +90,6 @@ int main(int argc, char* argv[]) {
 
 
     Camera camera(glm::vec3(0, 10, 0));
-
-
-    std::vector<EntityPtr> allCubes;
-    for(auto i=0; i < 200; i++) {
-        float x = (rand() / double(RAND_MAX)) * 100 - 50;
-        float y = (rand() / double(RAND_MAX)) * 100 - 50;
-        float z = (rand() / double(RAND_MAX)) * -300;
-
-        // we're using shared instead of unique because these get passed around into the renderer
-        // if we used unique_ptr, we'd have to std::move them into the vector within the renderer
-        // which is cleared each frame. This will result in the items getting deleted after just
-        // one frame of rendering
-        auto e = std::make_shared<Entity>(cubeModel, glm::vec3(x, y, z),
-          (rand() / double(RAND_MAX)) * 180.f, (rand() / double(RAND_MAX)) * 180.f, (rand() / double(RAND_MAX)) * 180.f,
-          1.f);
-
-        // allCubes will *own* the pointers, so we're moving them here, but in processEntity, we do not move them
-        allCubes.push_back( std::move(e) );
-    }
-
 
 
 
@@ -82,9 +107,10 @@ int main(int argc, char* argv[]) {
         renderer.processTerrain(terrain);
         renderer.processTerrain(terrain2);
 
-        for(auto& cube: allCubes)
-            renderer.processEntity(cube);
-
+        // do ferns and trees
+        for(auto& e: entities) {
+            renderer.processEntity(e);
+        }
 
         renderer.render(light, camera);
 
