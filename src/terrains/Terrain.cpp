@@ -4,11 +4,11 @@
 
 #include "Terrain.h"
 
-Terrain::Terrain(int gridX, int gridZ, Loader &loader, const ModelTexture &texture) :
-    texture(texture),
-    x(gridX * SIZE),
-    z(gridZ * SIZE),
-    model(RawModel(0, 0)) {
+Terrain::Terrain(int gridX, int gridZ, Loader &loader, const TerrainTexturePack &texturePack,
+                 const TerrainTexture &blendMap) :
+        x(gridX * SIZE),
+        z(gridZ * SIZE),
+        model(RawModel(0, 0)), texturePack(texturePack), blendMap(blendMap) {
 
 
     model = generateTerrain(loader);
@@ -73,6 +73,10 @@ const RawModel &Terrain::getModel() const {
     return model;
 }
 
-const ModelTexture &Terrain::getTexture() const {
-    return texture;
+const TerrainTexturePack &Terrain::getTexturePack() const {
+    return texturePack;
+}
+
+const TerrainTexture &Terrain::getBlendMap() const {
+    return blendMap;
 }

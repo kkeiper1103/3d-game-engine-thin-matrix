@@ -17,8 +17,8 @@ uniform mat4 viewMatrix;
 
 uniform vec3 lightPosition;
 
-const float density = 0.007;
-const float gradient = 1.5;
+const float density = 0.0035;
+const float gradient = 5.0;
 
 void main() {
     vec4 worldPosition = transformationMatrix * vec4(position, 1);
@@ -27,7 +27,7 @@ void main() {
 
     gl_Position = projectionMatrix * positionRelativeToCamera;
 
-    pass_textureCoords = textureCoords * 40.0;
+    pass_textureCoords = textureCoords;
 
     surfaceNormal = (transformationMatrix * vec4(normal, 0)).xyz;
     toLightVector = lightPosition - worldPosition.xyz;

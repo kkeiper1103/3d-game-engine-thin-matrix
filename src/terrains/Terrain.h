@@ -11,6 +11,7 @@
 #include "textures/ModelTexture.h"
 #include "models/RawModel.h"
 #include "renderEngine/Loader.h"
+#include "textures/TerrainTexturePack.h"
 
 class Terrain {
 protected:
@@ -20,10 +21,12 @@ protected:
     float x, z;
 
     RawModel model;
-    ModelTexture texture;
+    TerrainTexturePack texturePack;
+
+    TerrainTexture blendMap;
 
 public:
-    Terrain(int gridX, int gridZ, Loader& loader, const ModelTexture& texture);
+    Terrain(int gridX, int gridZ, Loader& loader, const TerrainTexturePack& texturePack, const TerrainTexture& blendMap);
 
     RawModel generateTerrain(Loader& loader);
 
@@ -32,7 +35,9 @@ public:
 
     const RawModel &getModel() const;
 
-    const ModelTexture &getTexture() const;
+    const TerrainTexturePack &getTexturePack() const;
+
+    const TerrainTexture &getBlendMap() const;
 };
 typedef std::shared_ptr<Terrain> TerrainPtr;
 

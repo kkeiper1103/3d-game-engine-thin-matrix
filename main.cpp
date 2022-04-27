@@ -96,8 +96,18 @@ int main(int argc, char* argv[]) {
     Light light(glm::vec3( 50, 200, -50 ), glm::vec3( 1, 1, 1 ));
 
 
-    auto terrain = std::make_shared<Terrain>(0, 0, loader, ModelTexture(loader.loadTexture("assets/images/grass.png")));
-    auto terrain2 = std::make_shared<Terrain>(1, 0, loader, ModelTexture(loader.loadTexture("assets/images/grass.png")));
+    // terrain generation stuff
+    TerrainTexture bg( loader.loadTexture("assets/images/grassy2.png") );
+    TerrainTexture rTexture( loader.loadTexture("assets/images/mud.png") );
+    TerrainTexture gTexture( loader.loadTexture("assets/images/grassFlowers.png") );
+    TerrainTexture bTexture( loader.loadTexture("assets/images/path.png") );
+    TerrainTexture blendMap( loader.loadTexture("assets/res/blendMap.png") );
+
+    TerrainTexturePack ttp(bg, rTexture, gTexture, bTexture);
+
+
+    auto terrain = std::make_shared<Terrain>(0, 0, loader, ttp, blendMap);
+    auto terrain2 = std::make_shared<Terrain>(1, 0, loader, ttp, blendMap);
 
 
     Camera camera(glm::vec3(0, 10, 0));

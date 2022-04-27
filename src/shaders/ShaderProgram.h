@@ -29,6 +29,9 @@ protected:
     virtual void getAllUniformLocations() {};
 
 
+    void loadInt(int location, int value) {
+        glUniform1i(location, value);
+    }
 
     void loadFloat(int location, float value) {
         glUniform1f(location, value);

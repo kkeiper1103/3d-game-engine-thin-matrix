@@ -24,6 +24,8 @@ public:
     void prepareTerrain(const TerrainPtr& model);
     void unbindTexturedModel();
     void loadModelMatrix(const TerrainPtr& entity);
+
+    void bindTextures(const TerrainPtr& terrain);
 };
 
 
