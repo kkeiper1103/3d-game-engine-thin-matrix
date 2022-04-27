@@ -51,6 +51,7 @@ int main(int argc, char* argv[]) {
 
     ModelTexture grassTexture( loader.loadTexture("assets/res/grassTexture.png") );
     grassTexture.setTransparent(true);
+    grassTexture.setFakeLighting(true);
     TexturedModel grassModel(
         OBJLoader::loadObjModel("assets/res/grassModel.obj", loader),
         grassTexture
@@ -69,8 +70,8 @@ int main(int argc, char* argv[]) {
         entities.emplace_back( std::make_shared<Entity>(treeModel, glm::vec3(x, y, z), rx, ry, rz, scale) );
     }
 
-    // generate random amount of ferns between 100 and 200
-    for(auto i=0; i < (rand() % 100) + 100; i++) {
+    // generate random amount of ferns between 10 and 20
+    for(auto i=0; i < (rand() % 10) + 10; i++) {
         float x = 10, y = 0, z = -50, rx = 0, ry = 0, rz = 0, scale = 1;
 
         x = (rand() % 200) - 100;

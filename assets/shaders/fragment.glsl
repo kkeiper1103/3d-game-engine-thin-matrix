@@ -12,6 +12,8 @@ uniform vec3 lightColor;
 uniform float shineDamper;
 uniform float reflectivity;
 
+uniform float fakeLighting;
+
 void main() {
     // calculate the texel at given coordinate
     vec4 texel = texture(textureSampler, pass_textureCoords);
@@ -21,8 +23,17 @@ void main() {
         discard;
     }
 
+
+    // if we're using fakeLighting, replace the normals with a horizontally perpendicular vector
+    vec3 actualNormal = surfaceNormal;
+
+    if(fakeLighting > 0.1) {
+        actualNormal = vec3(0, 1, 0);
+    }
+
+
     // get diffuse lighting
-    vec3 unitNormal = normalize(surfaceNormal);
+    vec3 unitNormal = normalize(actualNormal);
     vec3 unitLightVector = normalize(toLightVector);
 
     float nDotl = dot(unitNormal, unitLightVector);

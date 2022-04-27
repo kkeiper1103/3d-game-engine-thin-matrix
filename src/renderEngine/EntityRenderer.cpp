@@ -47,6 +47,7 @@ void EntityRenderer::prepareTexturedModel(const TexturedModel& model) {
     }
 
     shader.loadShineVariables(model.getTexture().getShineDamper(), model.getTexture().getReflectivity());
+    shader.loadFakeLighting(model.getTexture().isFakeLighting());
 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, model.getTexture().getID());
