@@ -110,7 +110,6 @@ int main(int argc, char* argv[]) {
     auto terrain2 = std::make_shared<Terrain>(1, 0, loader, ttp, blendMap);
 
 
-    Camera camera(glm::vec3(0, 50, 50));
 
 
     MasterRenderer renderer;
@@ -123,10 +122,14 @@ int main(int argc, char* argv[]) {
 
     std::shared_ptr<Entity> player = std::make_shared<Player>(playerTexture, glm::vec3(100, 0, -50));
 
+    Camera camera( std::dynamic_pointer_cast<Player>(player) );
+
     SDL_Event e;
     while(true) {
         while(SDL_PollEvent(&e)) {
             if(e.type == SDL_QUIT) goto terminate;
+
+            camera.input(&e);
         }
 
         camera.move();
