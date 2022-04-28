@@ -21,6 +21,7 @@ protected:
 
 public:
     Entity(const TexturedModel& model, const glm::vec3& position, float rx, float ry, float rz, float scale);
+    virtual ~Entity() = default;
 
     void increasePosition(float dx, float dy, float dz);
     void increaseRotation(float rx, float ry, float rz);

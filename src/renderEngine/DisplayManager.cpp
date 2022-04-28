@@ -7,6 +7,15 @@
 int DisplayManager::width = 1280;
 int DisplayManager::height = 700;
 
+long DisplayManager::lastFrameTime = 0;
+float DisplayManager::delta = 0;
+
+bool DisplayManager::fullscreen = false;
+
+SDL_Window* DisplayManager::window = nullptr;
+SDL_GLContext DisplayManager:: gl = nullptr;
+
+
 void DisplayManager::createDisplay() {
     window = SDL_CreateWindow("GameEngine3d", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL);
 
@@ -26,13 +35,24 @@ void DisplayManager::createDisplay() {
     SDL_GL_SetSwapInterval(1);
 
     glViewport(0, 0, width, height);
+
+    lastFrameTime = getCurrentTime();
 }
 
 void DisplayManager::updateDisplay() {
     SDL_GL_SwapWindow(window);
+
+    long currentFrameTime = getCurrentTime();
+    delta = (currentFrameTime - lastFrameTime) / 1000.f; // delta is in seconds
+
+    lastFrameTime = currentFrameTime;
 }
 
 void DisplayManager::closeDisplay() {
     SDL_GL_DeleteContext(gl);
     SDL_DestroyWindow(window);
+}
+
+long DisplayManager::getCurrentTime() {
+    return (long) SDL_GetTicks64();
 }

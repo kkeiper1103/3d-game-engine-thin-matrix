@@ -17,6 +17,7 @@
 #include "toolbox/Maths.h"
 #include "renderEngine/OBJLoader.h"
 #include "renderEngine/MasterRenderer.h"
+#include "entities/Player.h"
 
 
 std::vector<EntityPtr> entities;
@@ -33,8 +34,7 @@ int main(int argc, char* argv[]) {
     atexit(SDL_Quit);
 
 
-    DisplayManager dm;
-    dm.createDisplay();
+    DisplayManager::createDisplay();
     Loader loader;
 
     ModelTexture fernTexture( loader.loadTexture("assets/res/fern.png") );
@@ -110,11 +110,18 @@ int main(int argc, char* argv[]) {
     auto terrain2 = std::make_shared<Terrain>(1, 0, loader, ttp, blendMap);
 
 
-    Camera camera(glm::vec3(0, 10, 0));
+    Camera camera(glm::vec3(0, 50, 50));
 
 
     MasterRenderer renderer;
     renderer.createProjectionMatrix();
+
+
+    // make player
+    RawModel playerModel = OBJLoader::loadObjModel("assets/res/lowPolyTree.obj", loader);
+    TexturedModel playerTexture(playerModel, ModelTexture(loader.loadTexture("assets/res/lowPolyTree.png")));
+
+    std::shared_ptr<Entity> player = std::make_shared<Player>(playerTexture, glm::vec3(100, 0, -50));
 
     SDL_Event e;
     while(true) {
@@ -123,7 +130,9 @@ int main(int argc, char* argv[]) {
         }
 
         camera.move();
+        std::dynamic_pointer_cast<Player>(player)->move();
 
+        renderer.processEntity(player);
         renderer.processTerrain(terrain);
         renderer.processTerrain(terrain2);
 
@@ -134,14 +143,14 @@ int main(int argc, char* argv[]) {
 
         renderer.render(light, camera);
 
-        dm.updateDisplay();
+        DisplayManager::updateDisplay();
     }
     terminate:
 
 
     renderer.cleanUp();
     loader.cleanUp();
-    dm.closeDisplay();
+    DisplayManager::closeDisplay();
 
     return 0;
 }

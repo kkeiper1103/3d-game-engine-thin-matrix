@@ -15,15 +15,26 @@ public:
     static int width;
     static int height;
 
-    bool fullscreen;
+    static const int FPS_CAP = 120;
 
-    SDL_Window* window = nullptr;
-    SDL_GLContext gl = nullptr;
+    static long lastFrameTime;
+    static float delta;
+
+    static bool fullscreen;
+
+    static SDL_Window* window;
+    static SDL_GLContext gl;
+
+    static long getCurrentTime();
 
 public:
-    void createDisplay();
-    void updateDisplay();
-    void closeDisplay();
+    static void createDisplay();
+    static void updateDisplay();
+    static void closeDisplay();
+
+    static inline float getFrameTimeSeconds() {
+        return delta;
+    }
 };
 
 
