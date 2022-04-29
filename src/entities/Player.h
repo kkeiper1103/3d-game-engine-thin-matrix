@@ -14,7 +14,7 @@ class Player : public Entity {
 protected:
     static constexpr float RUN_SPEED = 20;
     static constexpr float TURN_SPEED = 160;
-    static constexpr float GRAVITY = -50;
+    static constexpr float GRAVITY = -65;
     static constexpr float JUMP_POWER = 30;
 
     static constexpr float TERRAIN_HEIGHT = 0;
