@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include "Terrain.h"
+#include "toolbox/Maths.h"
 
 Terrain::Terrain(int gridX, int gridZ, Loader &loader, const TerrainTexturePack &texturePack,
                  const TerrainTexture &blendMap, const std::string& heightmap) :
@@ -23,6 +24,8 @@ RawModel Terrain::generateTerrain(Loader &loader, const std::string& heightMap) 
     int VERTEX_COUNT = image.height;
     int count = VERTEX_COUNT * VERTEX_COUNT;
 
+    heights = std::vector<std::vector<float>>(VERTEX_COUNT, std::vector<float>(VERTEX_COUNT, 0));
+
     std::vector<float> vertices(count * 3);
     std::vector<float> normals(count * 3);
     std::vector<float> textureCoords(count * 2);
@@ -32,8 +35,11 @@ RawModel Terrain::generateTerrain(Loader &loader, const std::string& heightMap) 
     for(auto i=0; i < VERTEX_COUNT; i++) {
         for(auto j=0; j < VERTEX_COUNT; j++) {
 
+            float height = getHeight(i, j, image);
+            heights[j][i] = height;
+
             vertices[currentVertex*3 + 0] = -(float)j / ((float) VERTEX_COUNT - 1) * SIZE;
-            vertices[currentVertex*3 + 1] = getHeight(i, j, image);
+            vertices[currentVertex*3 + 1] = height;
             vertices[currentVertex*3 + 2] = -(float)i / ((float) VERTEX_COUNT - 1) * SIZE;
 
             glm::vec3 normal = calculateNormal(i, j, image);
@@ -149,4 +155,30 @@ glm::vec3 Terrain::calculateNormal(int x, int z, const ImageInfo& image) {
     normal = glm::normalize(normal);
 
     return normal;
+}
+
+float Terrain::getHeightOfTerrain(float worldX, float worldZ) {
+
+    // sometimes, the relative position can be negative, so take the absolute value of the difference to alleivate this
+    float terrainX = abs(worldX - x);
+    float terrainZ = abs(worldZ - z);
+
+    float gridSquareSize = SIZE / ((float) heights.size() - 1);
+
+    float gridX = floor( terrainX / gridSquareSize );
+    float gridZ = floor( terrainZ / gridSquareSize );
+
+    if(gridX >= heights.size() - 1 || gridZ >= heights.size() - 1 || gridX < 0 || gridZ < 0) {
+        return 0;
+    }
+
+    float xCoord = ( (int) terrainX % (int) gridSquareSize) / gridSquareSize;
+    float zCoord = ( (int) terrainZ % (int) gridSquareSize) / gridSquareSize;
+
+    // this works, but I get some choppy movement. maybe try a different formula, like point-plane distance
+    float answer = (xCoord <= 1 - zCoord) ?
+        Maths::barryCentric( {0, heights[gridX][gridZ], 0}, {1, heights[gridX + 1][gridZ], 0}, {0, heights[gridX + 1][gridZ + 1], 1}, {xCoord, zCoord} ) :
+        Maths::barryCentric( {1, heights[gridX + 1][gridZ], 0}, {0, heights[gridX][gridZ + 1], 1}, {1, heights[gridX + 1][gridZ + 1], 1}, {xCoord, zCoord} ) ;
+
+    return answer;
 }

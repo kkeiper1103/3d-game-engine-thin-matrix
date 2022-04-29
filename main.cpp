@@ -120,7 +120,7 @@ int main(int argc, char* argv[]) {
     RawModel playerModel = OBJLoader::loadObjModel("assets/res/lowPolyTree.obj", loader);
     TexturedModel playerTexture(playerModel, ModelTexture(loader.loadTexture("assets/res/lowPolyTree.png")));
 
-    std::shared_ptr<Entity> player = std::make_shared<Player>(playerTexture, glm::vec3(100, 0, -50));
+    std::shared_ptr<Entity> player = std::make_shared<Player>(playerTexture, glm::vec3(0, 0, 0));
 
     Camera camera( std::dynamic_pointer_cast<Player>(player) );
 
@@ -133,11 +133,12 @@ int main(int argc, char* argv[]) {
         }
 
         camera.move();
-        std::dynamic_pointer_cast<Player>(player)->move();
+
+        std::dynamic_pointer_cast<Player>(player)->move(terrain);
 
         renderer.processEntity(player);
         renderer.processTerrain(terrain);
-        renderer.processTerrain(terrain2);
+        // renderer.processTerrain(terrain2);
 
         // do ferns and trees
         for(auto& entity: entities) {

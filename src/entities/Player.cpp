@@ -10,7 +10,7 @@ Entity( model, position, 0, 0, 0, 1 ) {
 
 }
 
-void Player::move() {
+void Player::move(const TerrainPtr& terrainPtr) {
     checkInputs();
 
     increaseRotation(0, currentTurnSpeed * DisplayManager::getFrameTimeSeconds(), 0);
@@ -25,9 +25,11 @@ void Player::move() {
     upwardSpeed += GRAVITY * DisplayManager::getFrameTimeSeconds();
     increasePosition(0, upwardSpeed * DisplayManager::getFrameTimeSeconds(), 0);
 
-    if(getPosition().y < TERRAIN_HEIGHT) {
+    float terrainHeight = terrainPtr->getHeightOfTerrain(position.x, position.z);
+
+    if(getPosition().y < terrainHeight) {
         upwardSpeed = 0;
-        position.y = TERRAIN_HEIGHT;
+        position.y = terrainHeight;
 
         onGround = true;
     }

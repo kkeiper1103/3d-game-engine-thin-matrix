@@ -5,7 +5,7 @@
 #ifndef INC_3D_GAME_ENGINE_THIN_MATRIX_TERRAIN_H
 #define INC_3D_GAME_ENGINE_THIN_MATRIX_TERRAIN_H
 
-
+#include <iostream>
 #include <memory>
 #include <fstream>
 #include <sstream>
@@ -52,6 +52,8 @@ protected:
 
     float x=0, z=0;
 
+    std::vector<std::vector<float>> heights;
+
     RawModel model;
     TerrainTexturePack texturePack;
 
@@ -74,6 +76,8 @@ public:
     const TerrainTexturePack &getTexturePack() const;
 
     const TerrainTexture &getBlendMap() const;
+
+    float getHeightOfTerrain(float worldX, float worldY);
 };
 typedef std::shared_ptr<Terrain> TerrainPtr;
 

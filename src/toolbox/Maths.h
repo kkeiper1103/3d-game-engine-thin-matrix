@@ -13,8 +13,9 @@
 class Maths {
 public:
     static glm::mat4 createTransformationMatrix(const glm::vec3& translation, float rx, float ry, float rz, float scale);
-
     static glm::mat4 createViewMatrix(const Camera& camera);
+
+    static float barryCentric( const glm::vec3& p1, const glm::vec3& p2, const glm::vec3& p3, const glm::vec2& position );
 };
 
 

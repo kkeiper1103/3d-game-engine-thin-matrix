@@ -7,6 +7,7 @@
 
 
 #include "Entity.h"
+#include "terrains/Terrain.h"
 
 #include <SDL2/SDL.h>
 
@@ -32,7 +33,7 @@ protected:
 public:
     Player(const TexturedModel& model, const glm::vec3& position);
 
-    void move();
+    void move(const TerrainPtr& terrainPtr);
 };
 typedef std::shared_ptr<Player> PlayerPtr;
 
