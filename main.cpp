@@ -106,8 +106,8 @@ int main(int argc, char* argv[]) {
     TerrainTexturePack ttp(bg, rTexture, gTexture, bTexture);
 
 
-    auto terrain = std::make_shared<Terrain>(0, 0, loader, ttp, blendMap);
-    auto terrain2 = std::make_shared<Terrain>(1, 0, loader, ttp, blendMap);
+    auto terrain = std::make_shared<Terrain>(0, 0, loader, ttp, blendMap, "assets/images/heightMap.png");
+    auto terrain2 = std::make_shared<Terrain>(1, 0, loader, ttp, blendMap, "assets/images/heightMap.png");
 
 
 
