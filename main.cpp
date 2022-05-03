@@ -18,6 +18,7 @@
 #include "renderEngine/OBJLoader.h"
 #include "renderEngine/MasterRenderer.h"
 #include "entities/Player.h"
+#include "controls/Gamepad.h"
 
 
 std::vector<EntityPtr> entities;
@@ -121,6 +122,11 @@ int main(int argc, char* argv[]) {
     TexturedModel playerTexture(playerModel, ModelTexture(loader.loadTexture("assets/res/lowPolyTree.png")));
 
     std::shared_ptr<Entity> player = std::make_shared<Player>(playerTexture, glm::vec3(0, 0, 0));
+
+
+    Gamepad controller;
+    controller.attachTo( player.get() );
+
 
     Camera camera( std::dynamic_pointer_cast<Player>(player) );
 

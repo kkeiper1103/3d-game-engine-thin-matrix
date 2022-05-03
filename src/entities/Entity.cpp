@@ -20,3 +20,11 @@ void Entity::increaseRotation(float rx, float ry, float rz) {
     rotY += ry;
     rotZ += rz;
 }
+
+Gamepad *Entity::getController() const {
+    return controller;
+}
+
+void Entity::setController(Gamepad *controller) {
+    Entity::controller = controller;
+}

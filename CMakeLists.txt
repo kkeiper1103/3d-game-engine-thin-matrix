@@ -25,7 +25,7 @@ add_executable(game3d
         src/renderEngine/OBJLoader.h src/entities/Light.cpp src/entities/Light.h src/renderEngine/MasterRenderer.cpp
         src/renderEngine/MasterRenderer.h src/terrains/Terrain.cpp src/terrains/Terrain.h src/shaders/TerrainShader.cpp
         src/shaders/TerrainShader.h src/renderEngine/TerrainRenderer.cpp src/renderEngine/TerrainRenderer.h
-        src/textures/TerrainTexture.cpp src/textures/TerrainTexturePack.cpp src/entities/Player.cpp src/entities/Player.h)
+        src/textures/TerrainTexture.cpp src/textures/TerrainTexturePack.cpp src/entities/Player.cpp src/entities/Player.h src/controls/Gamepad.cpp src/controls/Gamepad.h)
 
 target_include_directories(game3d PRIVATE vendor/glad/include)
 target_include_directories(game3d PRIVATE vendor)

@@ -11,6 +11,10 @@
 
 #include "models/TexturedModel.h"
 
+// forward decl for the controller class.
+// could probably be solved with an interface instead of Gamepad*
+class Gamepad;
+
 class Entity {
 protected:
     TexturedModel model;
@@ -18,6 +22,10 @@ protected:
     glm::vec3 position;
     float rotX, rotY, rotZ;
     float scale;
+
+    // used as an anchor point for controlling an entity.
+    // if the controller isn't null, then the entity moves with user input
+    Gamepad* controller = nullptr;
 
 public:
     Entity(const TexturedModel& model, const glm::vec3& position, float rx, float ry, float rz, float scale);
@@ -74,6 +82,10 @@ public:
     void setScale(float scale) {
         Entity::scale = scale;
     }
+
+    Gamepad *getController() const;
+
+    void setController(Gamepad *controller);
 };
 
 typedef std::shared_ptr<Entity> EntityPtr;
