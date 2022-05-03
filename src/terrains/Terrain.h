@@ -42,6 +42,27 @@ struct ImageInfo {
     ~ImageInfo() {
         stbi_image_free(pixels);
     }
+
+    /**
+     *
+     * @param x
+     * @param y
+     * @return
+     */
+    int getPixel(int x, int y) {
+        if(x < 0 || x >= width || y < 0 || y >= height) return 0;
+
+        unsigned char* pixelOffset = pixels + (x + height * y) * channels;
+
+        unsigned char r = pixelOffset[0],
+                g = pixelOffset[1],
+                b = pixelOffset[2],
+                a = (channels >= 4) ? pixelOffset[3] : 0xff;
+
+        // this is to mimic the BufferedImage.getRGB() method
+        // stores an argb value in the format of 0xAARRGGBB, so A is 24 bits to the left, R is 16 bits to the left, G is 8 bits to the left, and B is normal.
+        return (a << 24) + (r << 16) + (g << 8) + (b);
+    }
 };
 
 class Terrain {
